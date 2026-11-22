@@ -1,0 +1,414 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MedAgent Workshop</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Khand:wght@300;400;500;600;700&display=swap">
+<style>
+/* Layout: conference-site template. Header bar (logo left, full name right), full-width banner photo, uppercase sticky nav, two-column body (content left, button sidebar right), uppercase section headings. Navy and cyan from the MedAgent logo. Single light look. */
+:root{
+  --navy:#1B2F6E; --navy-dk:#14234F; --cyan:#1AB3E8; --cyan-dk:#0A95C8; --green:#1A9E6A; --link:#2B52CC;
+  --ink:#000000; --text:#121212; --mid:#4A4F5A; --line:#E3E6EE; --panel:#F3F5FA; --paper:#FFFFFF;
+  --cond:"Khand","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Khand","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--paper);color:var(--text);font:19px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+h1,h2,h3{margin:0;color:var(--ink);text-wrap:balance}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* header */
+.masthead{background:var(--paper)}
+.masthead .wrap{display:flex;align-items:center;gap:24px;padding-block:18px}
+.masthead .logo{height:52px;width:auto;flex:none}
+.masthead .title{margin-left:auto;text-align:right;font-family:var(--cond);text-transform:uppercase;line-height:1.2}
+.masthead .title .l1{font-size:1.35rem;font-weight:600;color:var(--ink)}
+.masthead .title .l2{font-size:1.1rem;font-weight:600;color:var(--cyan-dk);margin-top:2px}
+.eds{position:relative;flex:none}
+.eds summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font:600 1rem/1 var(--cond);letter-spacing:.04em;text-transform:uppercase;color:var(--paper);background:var(--navy);padding:9px 10px 9px 14px;border-radius:4px}
+.eds summary::-webkit-details-marker{display:none}
+.eds summary svg{width:18px;height:18px;fill:currentColor;transition:transform .2s}
+.eds[open] summary svg{transform:rotate(180deg)}
+.eds .menu{position:absolute;right:0;top:calc(100% + 6px);z-index:30;width:260px;background:var(--paper);border:1px solid var(--line);border-radius:6px;box-shadow:0 14px 34px -14px rgba(20,24,60,.35);padding:6px}
+.eds .menu a,.eds .menu .cur,.eds .menu .soon{display:block;padding:10px 12px;border-radius:4px;text-decoration:none}
+.eds .menu a:hover{background:var(--panel)}
+.eds .menu b{display:block;font:700 1.05rem/1.2 var(--cond);text-transform:uppercase;color:var(--navy)}
+.eds .menu span{font-size:.86rem;color:var(--mid)}
+.eds .menu .cur{background:var(--panel)}
+.eds .menu .soon b{color:var(--mid)}
+
+/* banner */
+.banner{position:relative;background:#E9ECF3}
+.banner img{display:block;width:100%;height:auto;max-height:520px;object-fit:cover;object-position:center 55%}
+.banner figcaption{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:12px;background:rgba(18,22,52,.72);color:#fff;font-size:.82rem;padding:4px 10px;border-radius:3px}
+
+/* nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.mainnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);box-shadow:0 2px 10px rgba(20,24,60,.10);border-top:1px solid var(--line)}
+.mainnav .wrap{display:flex;justify-content:center;gap:4px;overflow-x:auto;scrollbar-width:none}
+.mainnav a{flex:none;font:600 1.3rem/1 var(--cond);text-transform:uppercase;letter-spacing:.01em;color:var(--navy);text-decoration:none;padding:17px 12px 15px;border-bottom:3px solid transparent}
+.mainnav a:hover{color:var(--cyan-dk);border-bottom-color:var(--cyan)}
+
+/* body layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:48px;padding-block:44px 24px}
+.welcome{font:700 clamp(2.2rem,4.6vw,3.4rem)/1.05 var(--cond);text-transform:uppercase;letter-spacing:-.005em}
+.welcome .n{color:var(--navy)}.welcome .c{color:var(--cyan)}
+.kicker{font:600 1.2rem/1.4 var(--cond);color:var(--ink);margin:14px 0 10px}
+.prose p{margin:0 0 14px;text-align:justify;hyphens:auto}
+.sig{margin-top:18px;color:var(--ink)}
+
+.side{display:grid;gap:12px;align-content:start}
+.sbtn{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:5px;color:#fff;text-decoration:none;font:700 1.18rem/1.1 var(--cond);text-transform:uppercase;letter-spacing:.02em;transition:filter .2s}
+.sbtn:hover{filter:brightness(1.08)}
+.sbtn svg{width:26px;height:26px;fill:currentColor;flex:none}
+.sbtn.g{background:var(--green)}.sbtn.c{background:var(--cyan-dk)}.sbtn.n{background:var(--navy)}
+.sbox{background:var(--navy);color:#fff;border-radius:5px;padding:16px 18px}
+.sbox h3{color:#fff;font:700 1.15rem/1.2 var(--cond);text-transform:uppercase;margin-bottom:10px}
+.sbox dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.92rem}
+.sbox dt{font-weight:600;color:#BFE6F8;white-space:nowrap}
+.sbox dd{margin:0}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.stat div{background:var(--paper);padding:12px 14px}
+.stat b{display:block;font:700 1.8rem/1 var(--cond);color:var(--navy)}
+.stat span{font-size:.84rem;color:var(--mid)}
+
+/* sections */
+.sec{padding-block:44px;border-top:1px solid var(--line)}
+.sec.alt{background:var(--panel)}
+.sec h2{font:700 clamp(2rem,3.4vw,2.7rem)/1.1 var(--cond);text-transform:uppercase;margin-bottom:22px}
+.sec h2 span{color:var(--cyan)}
+.sec .lead{color:var(--mid);margin:0 0 24px;max-width:62rem}
+.cols2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:36px}
+ol.topics{margin:0;padding-left:1.4em;columns:2;column-gap:32px}
+ol.topics li{break-inside:avoid;margin-bottom:6px}
+.box{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:var(--paper)}
+.box h3{font:700 1.2rem/1.2 var(--cond);text-transform:uppercase;color:var(--navy);margin-bottom:8px}
+.box p{margin:0 0 10px}
+table{width:100%;border-collapse:collapse;font-size:1rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font:700 1.05rem/1.2 var(--cond);text-transform:uppercase;color:var(--paper);background:var(--navy)}
+td.t{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600;color:var(--navy);width:9.5rem}
+tr.brk td{background:var(--panel);color:var(--mid)}
+tr.hl td{background:#E6F4FB}
+td small{display:block;color:var(--mid);font-size:.9rem}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+.tblwrap table{min-width:480px}
+.tblwrap tr:last-child td{border-bottom:0}
+
+/* speakers */
+.speakers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.spk{text-align:center}
+.spk img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:50%;border:4px solid var(--paper);box-shadow:0 0 0 1px var(--line);display:block;max-width:180px;margin:0 auto}
+.spk .k{font:600 .95rem/1 var(--cond);text-transform:uppercase;color:var(--cyan-dk);margin-top:12px}
+.spk h3{font:700 1.3rem/1.15 var(--cond);margin-top:4px}
+.spk .aff{font-size:.92rem;color:var(--navy);font-weight:500;line-height:1.3}
+.spk p{font-size:.9rem;color:var(--mid);margin:6px 0 0;line-height:1.45}
+
+/* awards */
+.awards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center}
+.awards img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:6px;display:block}
+.aw+.aw{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.aw .lab{display:inline-block;font:700 .95rem/1 var(--cond);text-transform:uppercase;letter-spacing:.03em;color:#fff;background:var(--navy);padding:6px 10px;border-radius:3px}
+.aw .lab.hm{background:var(--cyan-dk)}
+.aw h3{font:600 1.25rem/1.3 var(--cond);margin-top:10px}
+.aw p{margin:6px 0 0;font-size:.95rem;color:var(--mid)}
+
+/* papers */
+details.grp{border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+details.grp+details.grp{margin-top:10px}
+details.grp summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:10px;padding:14px 18px;font:700 1.2rem/1.2 var(--cond);text-transform:uppercase;color:var(--navy)}
+details.grp summary::-webkit-details-marker{display:none}
+details.grp summary::before{content:"+";font:700 1.3rem/1 var(--cond);color:var(--cyan-dk);width:.8em}
+details.grp[open] summary::before{content:"–"}
+details.grp summary span{margin-left:auto;font:500 .95rem/1 var(--body);text-transform:none;color:var(--mid)}
+ol.papers{margin:0;padding:0 20px 16px 46px;display:grid;gap:9px}
+ol.papers .au{display:block;color:var(--mid);font-size:.92rem}
+.tag{font:700 .78rem/1 var(--cond);text-transform:uppercase;color:#fff;background:var(--navy);padding:3px 7px;border-radius:3px;margin-left:6px;white-space:nowrap;vertical-align:2px}
+.tag.hm{background:var(--cyan-dk)}
+
+/* photos */
+.photos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.photos figure{margin:0;position:relative;border-radius:6px;overflow:hidden;background:var(--line)}
+.photos img{width:100%;height:100%;object-fit:cover;display:block}
+.p-big{grid-column:span 4;grid-row:span 2}.p-sm{grid-column:span 2;aspect-ratio:3/2}.p-half{grid-column:span 3;aspect-ratio:3/2}
+.photos figcaption{position:absolute;left:0;bottom:0;background:rgba(42,53,144,.88);color:#fff;font:600 .9rem/1 var(--cond);text-transform:uppercase;letter-spacing:.03em;padding:7px 10px;border-top-right-radius:4px}
+
+/* organizers */
+.orgs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.org{border-left:4px solid var(--cyan);background:var(--paper);padding:12px 14px}
+.org b{display:block;font:700 1.2rem/1.2 var(--cond);color:var(--ink)}
+.org span{font-size:.9rem;color:var(--mid);line-height:1.35;display:block}
+.note{margin-top:18px;color:var(--mid)}
+.note b{color:var(--ink)}
+
+footer{background:var(--paper);color:var(--text);font-size:1rem;border-top:4px solid var(--navy)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:24px}
+footer b{font:700 1.2rem/1.2 var(--cond);text-transform:uppercase;color:var(--cyan-dk);letter-spacing:.02em}
+footer .contact{user-select:all}
+
+@media (max-width:1000px){
+  .layout{grid-template-columns:1fr;gap:28px}
+  .side{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .side .sbox,.side .stat{grid-column:span 2}
+  .speakers{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .orgs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols2,.awards{grid-template-columns:1fr}
+  .mainnav .wrap{justify-content:flex-start}
+}
+@media (max-width:640px){
+  .masthead .wrap{flex-wrap:wrap;gap:12px}
+  .masthead .logo{height:40px}
+  .masthead .title{order:3;flex-basis:100%;text-align:left;margin-left:0}
+  .masthead .title .l1{font-size:1.1rem}.masthead .title .l2{font-size:.98rem}
+  .eds{margin-left:auto}
+  .banner img{max-height:none}
+  .banner figcaption{position:static;display:block;border-radius:0;background:var(--navy)}
+  .mainnav a{font-size:1.02rem;padding:14px 9px 12px}
+  .side{grid-template-columns:1fr}.side .sbox,.side .stat{grid-column:auto}
+  .speakers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .orgs{grid-template-columns:1fr}
+  ol.topics{columns:1}
+  .photos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .p-big{grid-column:span 2;grid-row:auto;aspect-ratio:3/2}.p-sm,.p-half{grid-column:span 1}
+  .prose p{text-align:left}
+  body{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="masthead"><div class="wrap">
+  <img class="logo" src="img/logo.png" alt="MedAgent">
+  <div class="title">
+    <div class="l1">The 2nd Workshop on Agentic AI for Medicine</div>
+    <div class="l2">MICCAI 2026, 1 October 2026, Strasbourg, France</div>
+  </div>
+  <details class="eds">
+    <summary>Editions<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg></summary>
+    <div class="menu">
+      <div class="soon"><b>3rd edition</b><span>MICCAI 2027, coming soon</span></div>
+      <div class="cur"><b>2nd edition</b><span>MICCAI 2026, Strasbourg</span></div>
+      <a href="https://link.springer.com/book/10.1007/978-3-032-06004-4" target="_blank" rel="noopener"><b>1st edition</b><span>MICCAI 2025, Daejeon, proceedings</span></a>
+    </div>
+  </details>
+</div></header>
+
+<figure class="banner" style="margin:0"><img src="img/groupwide.jpg" alt="Group photo of MedAgent 2026 participants in the workshop room, Strasbourg"></figure>
+
+<nav class="mainnav" aria-label="Sections"><div class="wrap">
+  <a href="#home">Home</a><a href="#call">Call for Papers</a><a href="#program">Program</a><a href="#speakers">Speakers</a><a href="#awards">Awards</a><a href="#papers">Papers</a><a href="#photos">Photos</a><a href="#organizers">Organizers</a>
+</div></nav>
+
+<main>
+<div class="wrap layout" id="home">
+  <div>
+    <h1 class="welcome">Welcome to <span class="n">MedAgent</span> <span class="c">2026</span></h1>
+    <div class="kicker">The 2nd Workshop on Agentic AI for Medicine, held with MICCAI 2026 in Strasbourg.</div>
+    <div class="prose">
+      <p>Agentic AI is emerging as a new paradigm in medical AI, following the eras of predictive AI and, more recently, generative AI. Unlike earlier systems that run predefined functions or produce outputs passively, agentic AI systems perceive, plan, act and reflect, with large foundation models as their cognitive core. They integrate domain tools, reason over clinical guidelines, manage longitudinal patient data and act within simulated or physical environments.</p>
+      <p>Building on its first edition at MICCAI 2025 in Daejeon, the second workshop brought together the medical imaging, clinical AI, robotics and healthcare communities. Submissions nearly tripled, from 17 to 46. The morning programme in Strasbourg featured five keynotes, six oral talks and 33 posters on clinical reasoning, imaging agents, tool use, evaluation and governance.</p>
+      <p>Thank you to our speakers, authors, 29 reviewers and everyone who filled the room. The full recording is available online, and the third edition will follow at MICCAI 2027.</p>
+    </div>
+    <div class="sig">Baoru Huang<br>On behalf of the Organizing Committee</div>
+  </div>
+  <aside class="side" aria-label="Quick links">
+    <a class="sbtn g" href="https://www.youtube.com/watch?v=gyJDGrbLknI" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 00-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 002.4 7.2 26 26 0 002 12a26 26 0 00.4 4.8 2.5 2.5 0 001.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 001.8-1.8A26 26 0 0022 12a26 26 0 00-.4-4.8zM10 15V9l5.2 3z"/></svg>Watch Recording</a>
+    <a class="sbtn c" href="https://openreview.net/group?id=MICCAI.org/2026/Workshop/AgenticMed" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6zm8 1.5V8h4.5zM8 12h10v1.6H8zm0 3.4h10V17H8zm0 3.4h7v1.6H8z"/></svg>Papers on OpenReview</a>
+    <a class="sbtn n" href="#photos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l-1.8 2H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-3.2L15 4zm3 4.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zm0 2a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/></svg>Photo Gallery</a>
+    <div class="stat">
+      <div><b>46</b><span>submissions</span></div>
+      <div><b>39</b><span>accepted papers</span></div>
+      <div><b>5</b><span>keynotes</span></div>
+      <div><b>29</b><span>reviewers</span></div>
+    </div>
+    <div class="sbox">
+      <h3>Important Dates</h3>
+      <dl>
+        <dt>31 Jul 2026</dt><dd>Submission deadline</dd>
+        <dt>15 Aug 2026</dt><dd>Notification</dd>
+        <dt>20 Aug 2026</dt><dd>Camera-ready</dd>
+        <dt>1 Oct 2026</dt><dd>Workshop, Room Madrid 2 (G)</dd>
+      </dl>
+    </div>
+  </aside>
+</div>
+
+<section class="sec alt" id="call"><div class="wrap">
+  <h2>Call for <span>Papers</span></h2>
+  <div class="cols2">
+    <div>
+      <ol class="topics">
+        <li>Theories, principles and structures of medical AI agents</li>
+        <li>Reasoning, planning and decision-making strategies</li>
+        <li>Evaluation paradigms and benchmarks</li>
+        <li>Large-scale datasets and tool-usage repositories</li>
+        <li>Adversarial robustness</li>
+        <li>Applications in medicine and healthcare</li>
+        <li>Scaling laws of clinical AI agents</li>
+        <li>Interpretability and explainability</li>
+        <li>Agent-based modelling in digital health</li>
+        <li>Multi-agent systems in medicine</li>
+        <li>Decentralised development and deployment</li>
+        <li>Ethics, safety, privacy and regulation</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h3>Awards</h3>
+      <p>Two awards recognise outstanding work: Best Workshop Paper and Best Workshop Paper Honorable Mention. Each comes with a certificate and a cash prize.</p>
+      <h3 style="margin-top:14px">Review</h3>
+      <p style="margin:0">Double-blind review by a programme committee of 29 reviewers, with at least two reviews per submission.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="program"><div class="wrap">
+  <h2>Program</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Time</th><th>Session</th></tr></thead>
+    <tbody>
+      <tr><td class="t">08:00 – 08:05</td><td>Welcome</td></tr>
+      <tr><td class="t">08:05 – 08:35</td><td>Keynote 1: Ehsan Adeli, Stanford University</td></tr>
+      <tr><td class="t">08:35 – 09:05</td><td>Keynote 2: Marcel Knopp, DKFZ Heidelberg</td></tr>
+      <tr><td class="t">09:05 – 09:40</td><td>Keynote 3: Mathias Unberath, Johns Hopkins University</td></tr>
+      <tr><td class="t">09:40 – 10:00</td><td>Oral session 1</td></tr>
+      <tr class="brk"><td class="t">10:00 – 10:30</td><td>Coffee break and poster session</td></tr>
+      <tr><td class="t">10:30 – 11:00</td><td>Keynote 4: Hien Van Nguyen, University of Houston</td></tr>
+      <tr><td class="t">11:00 – 11:30</td><td>Keynote 5: Jianing Qiu, MBZUAI</td></tr>
+      <tr><td class="t">11:30 – 12:10</td><td>Oral session 2</td></tr>
+      <tr class="hl"><td class="t">12:10 – 12:25</td><td>Award announcement</td></tr>
+      <tr><td class="t">12:25 – 12:30</td><td>Closing remarks</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<section class="sec alt" id="speakers"><div class="wrap">
+  <h2>Keynote <span>Speakers</span></h2>
+  <div class="speakers">
+    <div class="spk"><img src="img/sp_adeli.jpg" alt="Ehsan Adeli" loading="lazy"><div class="k">Keynote 1</div><h3>Ehsan Adeli</h3><div class="aff">Stanford University</div><p>Translational AI for medicine and mental health.</p></div>
+    <div class="spk"><img src="img/sp_knopp.jpg" alt="Marcel Knopp" loading="lazy"><div class="k">Keynote 2</div><h3>Marcel Knopp</h3><div class="aff">DKFZ Heidelberg</div><p>Surgical data science and validation of ML algorithms.</p></div>
+    <div class="spk"><img src="img/sp_unberath.jpg" alt="Mathias Unberath" loading="lazy"><div class="k">Keynote 3</div><h3>Mathias Unberath</h3><div class="aff">Johns Hopkins University</div><p>Physical AI that perceives, reasons and acts alongside people.</p></div>
+    <div class="spk"><img src="img/sp_nguyen.jpg" alt="Hien Van Nguyen" loading="lazy"><div class="k">Keynote 4</div><h3>Hien Van Nguyen</h3><div class="aff">University of Houston</div><p>AI and computer vision for biomedical images.</p></div>
+    <div class="spk"><img src="img/sp_qiu.jpg" alt="Jianing Qiu" loading="lazy"><div class="k">Keynote 5</div><h3>Jianing Qiu</h3><div class="aff">MBZUAI</div><p>Medical foundation models, agents and human-AI interaction.</p></div>
+  </div>
+</div></section>
+
+<section class="sec" id="awards"><div class="wrap">
+  <h2>Paper <span>Awards</span></h2>
+  <div class="awards">
+    <img src="img/award.jpg" alt="Best Paper Award presented on stage" loading="lazy">
+    <div>
+      <div class="aw"><span class="lab">Best Paper Award</span>
+        <h3>Wasserstein Equilibrium Decoding for Reliable Medical Visual Question Answering</h3>
+        <p>Luca Hagen, Johanna P. Müller, Xiaoliang Wang, Weitong Zhang, Bernhard Kainz<br>FAU Erlangen-Nürnberg, Imperial College London</p></div>
+      <div class="aw"><span class="lab hm">Honorable Mention</span>
+        <h3>Which Tool Response Should I Trust? Towards Tool-Expertise-Aware Chest X-ray Agent with Multimodal Agentic Reinforcement Learning</h3>
+        <p>Zheang Huai, Honglong Yang, Xiaomeng Li<br>The Hong Kong University of Science and Technology</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec alt" id="papers"><div class="wrap">
+  <h2>Accepted <span>Papers</span></h2>
+  <details class="grp" open><summary>Oral papers<span>6 papers</span></summary>
+    <ol class="papers">
+      <li>Which Tool Response Should I Trust? Towards Tool-Expertise-Aware Chest X-ray Agent with Multimodal Agentic Reinforcement Learning<span class="tag hm">Honorable Mention</span><span class="au">Zheang Huai, Honglong Yang, Xiaomeng Li</span></li>
+      <li>Wasserstein Equilibrium Decoding for Reliable Medical Visual Question Answering<span class="tag">Best Paper</span><span class="au">Luca Hagen, Johanna P. Müller, Xiaoliang Wang, Weitong Zhang, Bernhard Kainz</span></li>
+      <li>Governed, Autonomous, and Privacy-Preserving Medical Imaging Research: Predicting Coronary Artery Calcium Presence from Retinal Fundus Photographs Compared to Human-Directed Workflows</li>
+      <li>When to Request and Whether to Trust: A Two-Decision Imaging Agent for Pleural Effusion Assessment<span class="au">Yehyun Ko, Junah Jung, Chang Min Park, Dongheon Lee</span></li>
+      <li>Too Tight or Too Loose: How VLM Persona Committees Miscalibrate Inter-Rater Ambiguity in Medical Image Segmentation<span class="au">Md Hasan Al Banna, Md Maklachur Rahman, Tracy Hammond</span></li>
+      <li>Agentic Visual Evidence Construction and Review Architecture for Medical VQA<span class="au">Qixian Chen, Mingjin Chen, Xin Zhang</span></li>
+    </ol>
+  </details>
+  <details class="grp"><summary>Clinical reasoning and decision support<span>7 posters</span></summary>
+    <ol class="papers">
+      <li>CLAP-4-QnA: An Agentic Graph-RAG Pipeline for SNOMED-CT-Grounded Clinical Question Answering<span class="au">Prateek Mittal et al.</span></li>
+      <li>Retrieval-Augmented Longitudinal Reasoning for OCT Change Detection and Forecasting: A Trajectory-Aware Multimodal RAG Framework with Calibrated Vision-Language Models<span class="au">Rachid Zeghlache et al.</span></li>
+      <li>EndoRAG: An Agentic Retrieval-Augmented Generation Framework for Endocrinology Question Answering<span class="au">Maria Panagiotou et al.</span></li>
+      <li>LongCXR-Agent: Query-Driven Tool Selection for Longitudinal Chest X-ray Reasoning<span class="au">Yoonsung Jung et al.</span></li>
+      <li>HPOQuest: A Rare-Disease Diagnostic Agent Using Active Phenotype Acquisition<span class="au">Kamilia Zaripova et al.</span></li>
+      <li>LongAgent: History-Guided Agentic Search for Longitudinal Outcome Prediction<span class="au">Siyao Wang et al.</span></li>
+      <li>Toward Anxiety-Reducing Conversational AI Agents for Breast Cancer Care<span class="au">Neda Ghafouri et al.</span></li>
+    </ol>
+  </details>
+  <details class="grp"><summary>Multimodal imaging and diagnostic agents<span>8 posters</span></summary>
+    <ol class="papers">
+      <li>A Multi-Agent Framework for Automated MRI Reporting in Glioma: A Real-World Clinical Validation<span class="au">Ahmed Tamer El Boardy et al.</span></li>
+      <li>Ask4VG: A Risk-Aware Question Selection Agent for Reducing Prior-Driven Answers in Medical VQA<span class="au">Xiaorong Zhu et al.</span></li>
+      <li>Disentangling Perception and Reasoning in Zero-Shot Multimodal LLMs for Ultrasound Diagnosis<span class="au">Christian Devin et al.</span></li>
+      <li>Towards Automated Cardiac MRI Assessment: A MultiAgent CAD Framework for Functional Analysis and Tissue Characterization<span class="au">Walid Al-Haidri et al.</span></li>
+      <li>Echo-CoPilot: A Multiple-Perspective Agentic Framework for Reliable Echocardiography Interpretation<span class="au">Moein Heidari et al.</span></li>
+      <li>MedPAO-Assist: Edge-Deployable, Modality-Aware Agentic AI for Radiology Report Structuring<span class="au">Shrish Shrinath Vaidya et al.</span></li>
+      <li>A Modular Agent for Reliable and Auditable Spatial Relation Verification in CT Scans<span class="au">Simon Vincent Abel et al.</span></li>
+      <li>FaceLandmarkAgent: A Training-Free Planner-Critic Agent for 3D Facial Landmarking via Spatial-Semantic Reasoning<span class="au">Yao Gao et al.</span></li>
+    </ol>
+  </details>
+  <details class="grp"><summary>Pipelines, tool use and workflows<span>8 posters</span></summary>
+    <ol class="papers">
+      <li>Vision-Language Model Guided Semantic Curation for Large-Scale Medical Data Cohorts<span class="au">Xiaoliang Wang et al.</span></li>
+      <li>A Fully Local Agentic LLM Architecture for Tool Invocation in Medical Imaging<span class="au">Paul Dumont et al.</span></li>
+      <li>Can Coding Agents Build Robust Baselines? A Skill-Based Approach for Automating the Medical Imaging Model-Development Pipeline<span class="au">Eugenia Moris et al.</span></li>
+      <li>A Label-Efficient On-Device QC Agent for MRI Segmentation under Domain Shift<span class="au">Jacky Li</span></li>
+      <li>CaseWeaver: A Multi-Agent Framework for Multimodal Virtual Clinical Case Generation<span class="au">Jierui Qu et al.</span></li>
+      <li>Evaluating Procedural Tool-Calling in AI Agents for Lung Cancer Workflows<span class="au">Flavio Stucchi et al.</span></li>
+      <li>HarmoAgent: An Autonomous LLM Agentic Framework for Adaptive and Traceable Multi-Site MRI Harmonization<span class="au">Cheng Wang et al.</span></li>
+      <li>MorphoOrgaAgent: A Foundation-Model-Based Multi-Agent System for Autonomous Organoid Analysis<span class="au">Hanyi Zhang et al.</span></li>
+    </ol>
+  </details>
+  <details class="grp"><summary>Evaluation, reliability and governance<span>10 posters</span></summary>
+    <ol class="papers">
+      <li>From Metrics to Insight: Agent-Based Comprehensive Evaluation of Medical Image Segmentation<span class="au">Darshan Dathiya et al.</span></li>
+      <li>Why Benchmark Accuracy Fails to Measure Clinical Reasoning in Medical Vision Language Models: Toward Clinical Adversarial Validation<span class="au">Azmine Toushik Wasi et al.</span></li>
+      <li>FRAC-MAS: A Safe and Explainable Multi-Agent System for Fracture Diagnosis<span class="au">Hardik Iyer et al.</span></li>
+      <li>Attack Your Own Findings: A Falsification Agent Framework for Biomedical Discovery, Benchmarked on Four Errors We Actually Made<span class="au">Sungman Hong et al.</span></li>
+      <li>AgentQC: Policy-Constrained Agentic Assessment of Task-Aware Reliability in Medical Imaging Datasets<span class="au">Gustavo Andrade-Miranda et al.</span></li>
+      <li>Agents Catching Agents: Shortcut Cascades and Benchmark Gaming in Clinical Multi-Agent Systems<span class="au">Sebastián Andrés Cajas Ordóñez et al.</span></li>
+      <li>AgentFL-Bench: Benchmarking Small Language Models for Fairness Governance in Federated Clinical AI<span class="au">Farnoosh Ghadiri et al.</span></li>
+      <li>MechAgent: Active Mechanism Falsification for Agentic Cross-Species Medical Reasoning<span class="au">Arijit Patra et al.</span></li>
+      <li>GLIO-FAILSAFE: Failed Experiment or Negative Result?<span class="au">Murari Ambati</span></li>
+      <li>Absent-Byte Diagnoses: Auditing Structured Medical VLM Interfaces<span class="au">Siddharth Vohra et al.</span></li>
+    </ol>
+  </details>
+</div></section>
+
+<section class="sec" id="photos"><div class="wrap">
+  <h2>Photo <span>Gallery</span></h2>
+  <div class="photos">
+    <figure class="p-big"><img src="img/crowd.jpg" alt="Speaker presenting to a full room" loading="lazy"><figcaption>Keynote session</figcaption></figure>
+    <figure class="p-sm"><img src="img/opening.jpg" alt="Opening slide of the MedAgent workshop" loading="lazy"><figcaption>Opening</figcaption></figure>
+    <figure class="p-sm"><img src="img/keynote.jpg" alt="Keynote speaker at the podium" loading="lazy"><figcaption>Keynote</figcaption></figure>
+    <figure class="p-half"><img src="img/qa.jpg" alt="Audience member asking a question" loading="lazy"><figcaption>Q&amp;A</figcaption></figure>
+    <figure class="p-half"><img src="img/group.jpg" alt="Organizers and speakers in front of the workshop slide" loading="lazy"><figcaption>Organizers</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="sec alt" id="organizers"><div class="wrap">
+  <h2>Organizing <span>Committee</span></h2>
+  <div class="orgs">
+    <div class="org"><b>Baoru Huang</b><span>University of Liverpool</span></div>
+    <div class="org"><b>Imran Razzak</b><span>MBZUAI</span></div>
+    <div class="org"><b>Yuankai Huo</b><span>Vanderbilt University</span></div>
+    <div class="org"><b>Jinlin Wu</b><span>Hong Kong Institute of Science &amp; Innovation</span></div>
+    <div class="org"><b>Mengyun Qiao</b><span>UCL</span></div>
+    <div class="org"><b>Danail Stoyanov</b><span>UCL</span></div>
+    <div class="org"><b>Shuo Li</b><span>Case Western Reserve University</span></div>
+  </div>
+  <p class="note"><b>Steering committee:</b> Kaini Wang, Jiachuan Peng, Gui Wang, Tuong Khanh Long Do.<br><b>Program committee:</b> 29 reviewers.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div><b>MedAgent</b><br>Workshop on Agentic AI for Medicine at MICCAI</div>
+  <div>1st edition: MICCAI 2025, Daejeon<br>2nd edition: MICCAI 2026, Strasbourg</div>
+  <div>Contact<br><span class="contact">Baoru.Huang@liverpool.ac.uk</span></div>
+</div></footer>
+
+<script>
+(function(){
+  var m=document.querySelector('.eds');
+  document.addEventListener('click',function(e){ if(m&&m.open&&!m.contains(e.target)) m.open=false; });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&m) m.open=false; });
+})();
+</script>
