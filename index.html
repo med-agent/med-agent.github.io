@@ -134,7 +134,7 @@ ol.papers .au{display:block;color:var(--mid);font-size:.92rem}
 .photos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
 .photos figure{margin:0;position:relative;border-radius:6px;overflow:hidden;background:var(--line)}
 .photos img{width:100%;height:100%;object-fit:cover;display:block}
-.p-big{grid-column:span 4;grid-row:span 2}.p-sm{grid-column:span 2;aspect-ratio:3/2}.p-half{grid-column:span 3;aspect-ratio:3/2}
+.p-full{grid-column:1/-1;aspect-ratio:2400/924}.p-big{grid-column:span 4;grid-row:span 2}.p-sm{grid-column:span 2;aspect-ratio:3/2}.p-half{grid-column:span 3;aspect-ratio:3/2}
 .photos figcaption{position:absolute;left:0;bottom:0;background:rgba(42,53,144,.88);color:#fff;font:600 .9rem/1 var(--cond);text-transform:uppercase;letter-spacing:.03em;padding:7px 10px;border-top-right-radius:4px}
 
 /* organizers */
@@ -173,7 +173,7 @@ footer .contact{user-select:all}
   .orgs{grid-template-columns:1fr}
   ol.topics{columns:1}
   .photos{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .p-big{grid-column:span 2;grid-row:auto;aspect-ratio:3/2}.p-sm,.p-half{grid-column:span 1}
+  .p-full{grid-column:1/-1}.p-big{grid-column:span 2;grid-row:auto;aspect-ratio:3/2}.p-sm,.p-half{grid-column:span 1}
   .prose p{text-align:left}
   body{font-size:16px}
 }
@@ -196,7 +196,7 @@ footer .contact{user-select:all}
   </details>
 </div></header>
 
-<figure class="banner" style="margin:0"><img src="img/groupwide.jpg" alt="Group photo of MedAgent 2026 participants in the workshop room, Strasbourg"></figure>
+<figure class="banner" style="margin:0"><img src="img/backview.jpg" alt="View from the back of the room during a keynote at MedAgent 2026, Strasbourg"></figure>
 
 <nav class="mainnav" aria-label="Sections"><div class="wrap">
   <a href="#home">Home</a><a href="#call">Call for Papers</a><a href="#program">Program</a><a href="#speakers">Speakers</a><a href="#awards">Awards</a><a href="#papers">Papers</a><a href="#photos">Photos</a><a href="#organizers">Organizers</a>
@@ -375,7 +375,8 @@ footer .contact{user-select:all}
 <section class="sec" id="photos"><div class="wrap">
   <h2>Photo <span>Gallery</span></h2>
   <div class="photos">
-    <figure class="p-big"><img src="img/crowd.jpg" alt="Speaker presenting to a full room" loading="lazy"><figcaption>Keynote session</figcaption></figure>
+    <figure class="p-full"><img src="img/groupwide.jpg" alt="Group photo of MedAgent 2026 participants in the workshop room, Strasbourg" loading="lazy"><figcaption>Group photo</figcaption></figure>
+    <figure class="p-big"><img src="img/room.jpg" alt="Full workshop room during a talk" loading="lazy"><figcaption>Full room</figcaption></figure>
     <figure class="p-sm"><img src="img/opening.jpg" alt="Opening slide of the MedAgent workshop" loading="lazy"><figcaption>Opening</figcaption></figure>
     <figure class="p-sm"><img src="img/keynote.jpg" alt="Keynote speaker at the podium" loading="lazy"><figcaption>Keynote</figcaption></figure>
     <figure class="p-half"><img src="img/qa.jpg" alt="Audience member asking a question" loading="lazy"><figcaption>Q&amp;A</figcaption></figure>
