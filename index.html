@@ -19,7 +19,7 @@ body{background:var(--paper);color:var(--text);font:19px/1.5 var(--body);-webkit
 a{color:var(--link);text-underline-offset:3px}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 h1,h2,h3{margin:0;color:var(--ink);text-wrap:balance}
-.wrap{max-width:1440px;margin-inline:auto;padding-left:max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,3vw,40px),env(safe-area-inset-right,0px))}
+.wrap{max-width:1320px;box-sizing:content-box;margin-inline:auto;padding-left:max(max(16px,17vw - 40px),env(safe-area-inset-left,0px));padding-right:max(max(16px,17vw - 40px),env(safe-area-inset-right,0px))}
 
 /* header */
 .masthead{background:var(--paper)}
@@ -60,8 +60,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .mainnav a:hover{color:var(--cyan-dk);border-bottom-color:var(--cyan)}
 
 /* body layout */
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:48px;padding-block:44px 24px}
-.welcome{font:700 clamp(2.2rem,4.6vw,3.4rem)/1.05 var(--cond);text-transform:uppercase;letter-spacing:-.005em}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;padding-block:44px 24px}
+.welcome{font:700 clamp(2rem,3.4vw,3.4rem)/1.05 var(--cond);text-transform:uppercase;letter-spacing:-.005em}
 .welcome .n{color:var(--navy)}.welcome .c{color:var(--cyan)}
 .kicker{font:600 1.2rem/1.4 var(--cond);color:var(--ink);margin:14px 0 10px}
 .prose p{margin:0 0 14px;text-align:justify;hyphens:auto}
