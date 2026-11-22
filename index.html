@@ -42,6 +42,12 @@ h1,h2,h3{margin:0;color:var(--ink);text-wrap:balance}
 .eds .menu .soon b{color:var(--mid)}
 
 /* banner */
+.slides{aspect-ratio:2400/924;max-height:520px;overflow:hidden}
+.slides img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;opacity:0;transition:opacity 1s ease}
+.slides img.on{opacity:1}
+.slides .dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px}
+.slides .dots button{width:10px;height:10px;padding:0;border:2px solid #fff;border-radius:50%;background:transparent;cursor:pointer}
+.slides .dots button.on{background:#fff}
 .banner{position:relative;background:#E9ECF3}
 .banner img{display:block;width:100%;height:auto;max-height:520px;object-fit:cover;object-position:center 55%}
 .banner figcaption{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:12px;background:rgba(18,22,52,.72);color:#fff;font-size:.82rem;padding:4px 10px;border-radius:3px}
@@ -196,7 +202,14 @@ footer .contact{user-select:all}
   </details>
 </div></header>
 
-<figure class="banner" style="margin:0"><img src="img/backview.jpg" alt="View from the back of the room during a keynote at MedAgent 2026, Strasbourg"></figure>
+<figure class="banner slides" style="margin:0">
+  <img src="img/back1.jpg" alt="Keynote by Mathias Unberath seen from the back of the room" class="on">
+  <img src="img/back2.jpg" alt="Keynote by Marcel Knopp seen from the back of the room" loading="lazy">
+  <img src="img/back3.jpg" alt="A keynote seen from the back of the room" loading="lazy">
+  <img src="img/back4.jpg" alt="An oral talk seen from the back of the room" loading="lazy">
+  <img src="img/back5.jpg" alt="Audience listening to a keynote" loading="lazy">
+  <div class="dots"><button type="button" aria-label="Photo 1" class="on"></button><button type="button" aria-label="Photo 2"></button><button type="button" aria-label="Photo 3"></button><button type="button" aria-label="Photo 4"></button><button type="button" aria-label="Photo 5"></button></div>
+</figure>
 
 <nav class="mainnav" aria-label="Sections"><div class="wrap">
   <a href="#home">Home</a><a href="#call">Call for Papers</a><a href="#program">Program</a><a href="#speakers">Speakers</a><a href="#awards">Awards</a><a href="#papers">Papers</a><a href="#photos">Photos</a><a href="#organizers">Organizers</a>
@@ -375,7 +388,7 @@ footer .contact{user-select:all}
 <section class="sec" id="photos"><div class="wrap">
   <h2>Photo <span>Gallery</span></h2>
   <div class="photos">
-    <figure class="p-full"><img src="img/groupwide.jpg" alt="Group photo of MedAgent 2026 participants in the workshop room, Strasbourg" loading="lazy"><figcaption>Group photo</figcaption></figure>
+    <figure class="p-full"><img src="img/groupwide.jpg" alt="Group photo of MedAgent 2026 participants in the workshop room, Strasbourg" loading="lazy"></figure>
     <figure class="p-big"><img src="img/room.jpg" alt="Full workshop room during a talk" loading="lazy"><figcaption>Full room</figcaption></figure>
     <figure class="p-sm"><img src="img/opening.jpg" alt="Opening slide of the MedAgent workshop" loading="lazy"><figcaption>Opening</figcaption></figure>
     <figure class="p-sm"><img src="img/keynote.jpg" alt="Keynote speaker at the podium" loading="lazy"><figcaption>Keynote</figcaption></figure>
@@ -410,6 +423,15 @@ footer .contact{user-select:all}
   var m=document.querySelector('.eds');
   document.addEventListener('click',function(e){ if(m&&m.open&&!m.contains(e.target)) m.open=false; });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&m) m.open=false; });
+  (function(){
+    var s=document.querySelector('.slides'); if(!s) return;
+    var im=s.querySelectorAll('img'), d=s.querySelectorAll('.dots button'), k=0, t;
+    function go(n){ im[k].classList.remove('on'); d[k].classList.remove('on'); k=(n+im.length)%im.length; im[k].loading='eager'; im[k].classList.add('on'); d[k].classList.add('on'); }
+    function start(){ clearInterval(t); t=setInterval(function(){ go(k+1); },5000); }
+    d.forEach(function(b,i){ b.addEventListener('click',function(){ go(i); start(); }); });
+    for(var i=1;i<im.length;i++) im[i].loading='eager';
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches) start();
+  })();
   document.addEventListener('click',function(e){
     var a=e.target.closest('a[href^="#"]'); if(!a) return;
     var t=document.getElementById(a.getAttribute('href').slice(1)); if(!t) return;
