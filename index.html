@@ -410,5 +410,11 @@ footer .contact{user-select:all}
   var m=document.querySelector('.eds');
   document.addEventListener('click',function(e){ if(m&&m.open&&!m.contains(e.target)) m.open=false; });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&m) m.open=false; });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]'); if(!a) return;
+    var t=document.getElementById(a.getAttribute('href').slice(1)); if(!t) return;
+    e.preventDefault(); t.scrollIntoView();
+  });
+  if(location.hash){ var h=document.getElementById(location.hash.slice(1)); history.replaceState(null,'',location.pathname+location.search); if(h) h.scrollIntoView(); }
 })();
 </script>
