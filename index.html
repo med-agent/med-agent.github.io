@@ -19,7 +19,7 @@ body{background:var(--paper);color:var(--text);font:19px/1.5 var(--body);-webkit
 a{color:var(--link);text-underline-offset:3px}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 h1,h2,h3{margin:0;color:var(--ink);text-wrap:balance}
-.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1440px;margin-inline:auto;padding-left:max(clamp(16px,3vw,40px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,3vw,40px),env(safe-area-inset-right,0px))}
 
 /* header */
 .masthead{background:var(--paper)}
@@ -94,7 +94,7 @@ ol.topics li{break-inside:avoid;margin-bottom:6px}
 .box{border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:var(--paper)}
 .box h3{font:700 1.2rem/1.2 var(--cond);text-transform:uppercase;color:var(--navy);margin-bottom:8px}
 .box p{margin:0 0 10px}
-table{width:100%;border-collapse:collapse;font-size:1rem}
+table{width:100%;border-collapse:collapse;font-size:1.12rem}td.sp{font-weight:600;color:var(--navy)}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
 thead th{font:700 1.05rem/1.2 var(--cond);text-transform:uppercase;color:var(--paper);background:var(--navy)}
 td.t{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600;color:var(--navy);width:9.5rem}
@@ -278,19 +278,19 @@ footer .contact{user-select:all}
 <section class="sec" id="program"><div class="wrap">
   <h2>Program</h2>
   <div class="tblwrap"><table>
-    <thead><tr><th>Time</th><th>Session</th></tr></thead>
+    <thead><tr><th>Time</th><th>Session</th><th>Speaker</th><th>Affiliation</th></tr></thead>
     <tbody>
-      <tr><td class="t">08:00 – 08:05</td><td>Welcome</td></tr>
-      <tr><td class="t">08:05 – 08:35</td><td>Keynote 1: Ehsan Adeli, Stanford University</td></tr>
-      <tr><td class="t">08:35 – 09:05</td><td>Keynote 2: Marcel Knopp, DKFZ Heidelberg</td></tr>
-      <tr><td class="t">09:05 – 09:40</td><td>Keynote 3: Mathias Unberath, Johns Hopkins University</td></tr>
-      <tr><td class="t">09:40 – 10:00</td><td>Oral session 1</td></tr>
-      <tr class="brk"><td class="t">10:00 – 10:30</td><td>Coffee break and poster session</td></tr>
-      <tr><td class="t">10:30 – 11:00</td><td>Keynote 4: Hien Van Nguyen, University of Houston</td></tr>
-      <tr><td class="t">11:00 – 11:30</td><td>Keynote 5: Jianing Qiu, MBZUAI</td></tr>
-      <tr><td class="t">11:30 – 12:10</td><td>Oral session 2</td></tr>
-      <tr class="hl"><td class="t">12:10 – 12:25</td><td>Award announcement</td></tr>
-      <tr><td class="t">12:25 – 12:30</td><td>Closing remarks</td></tr>
+      <tr><td class="t">08:00 – 08:05</td><td colspan="3">Welcome</td></tr>
+      <tr><td class="t">08:05 – 08:35</td><td>Keynote 1</td><td class="sp">Ehsan Adeli</td><td>Stanford University</td></tr>
+      <tr><td class="t">08:35 – 09:05</td><td>Keynote 2</td><td class="sp">Marcel Knopp</td><td>DKFZ Heidelberg</td></tr>
+      <tr><td class="t">09:05 – 09:40</td><td>Keynote 3</td><td class="sp">Mathias Unberath</td><td>Johns Hopkins University</td></tr>
+      <tr><td class="t">09:40 – 10:00</td><td colspan="3">Oral session 1</td></tr>
+      <tr class="brk"><td class="t">10:00 – 10:30</td><td colspan="3">Coffee break and poster session</td></tr>
+      <tr><td class="t">10:30 – 11:00</td><td>Keynote 4</td><td class="sp">Hien Van Nguyen</td><td>University of Houston</td></tr>
+      <tr><td class="t">11:00 – 11:30</td><td>Keynote 5</td><td class="sp">Jianing Qiu</td><td>MBZUAI</td></tr>
+      <tr><td class="t">11:30 – 12:10</td><td colspan="3">Oral session 2</td></tr>
+      <tr class="hl"><td class="t">12:10 – 12:25</td><td colspan="3">Award announcement</td></tr>
+      <tr><td class="t">12:25 – 12:30</td><td colspan="3">Closing remarks</td></tr>
     </tbody>
   </table></div>
 </div></section>
